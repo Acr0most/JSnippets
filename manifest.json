@@ -1,7 +1,7 @@
 {
-  "name": "JSnippet",
+  "name": "JSnippets",
   "version": "1.0",
-  "description": "handle snippets and execute on active",
+  "description": "Handle and execute javascript snippets.",
   "permissions": [
     "storage",
     "declarativeContent",
