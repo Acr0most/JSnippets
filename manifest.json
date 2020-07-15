@@ -1,0 +1,22 @@
+{
+  "name": "JSnippet",
+  "version": "1.0",
+  "description": "handle snippets and execute on active",
+  "permissions": [
+    "storage",
+    "declarativeContent",
+    "http://*/*",
+    "https://*/*",
+    "tabs"
+  ],
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "persistent": false
+  },
+  "browser_action": {
+    "default_popup": "popup.html"
+  },
+  "manifest_version": 2
+}
