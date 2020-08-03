@@ -4,11 +4,16 @@ chrome.runtime.onInstalled.addListener(function () {
  chrome.storage.local.set({
     snippet1: {
       name: "Gitlab",
-      cmd: "setTimeout(() => document.querySelector(\".diff-files-holder.container-limited.limit-container-width.mx-lg-auto.px-3\").style.maxWidth=\"none\", 5000);",
+      cmd: `
+	var myInterval = setInterval(() => {
+		if (document.querySelector(".diff-files-holder.container-limited.limit-container-width.mx-lg-auto.px-3") != null) {
+			document.querySelector(".diff-files-holder.container-limited.limit-container-width.mx-lg-auto.px-3").style.maxWidth="none"
+			clearInterval(myInterval)
+		}
+	}, 300);`,
       regex: "gitlab(.*)diffs",
       autoExecute: true,
     },
-
   });
 });
 
