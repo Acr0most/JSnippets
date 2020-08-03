@@ -28,7 +28,7 @@
     }
 
     .snippet.selected {
-      background-color: red;
+      background-color: #e7e7ff;
     }
 
     .name, .cmd , .snippet {
@@ -36,23 +36,33 @@
     }
 
     .snippet:hover {
-      background-color: gray;
+      background-color: #D3D3D3;
     }
 
     .options {
       padding: 0 10px;
+    }
+
+    #add {
+	width: calc(100% - 20px);
     }
   </style>
 </head>
 
 <body>
   <div class="wrapper">
-    <div id="snippets" class="snippets"></div>
+    <div id="snippets" class="snippets">
+	<div id="outlet"></div>
+	<input type="text" id="add" placeholder="add new.." />
+    </div>
     <div class="options">
       <div id="options-name" class="name" contenteditable="true"></div>
       <pre id="options-cmd" class="cmd" contenteditable="true"></pre>
+      <input type="checkbox" id="options-autoexecute" />
+      <div id="options-regex" contenteditable="true"></div>
       <button id="save">Save</button>
       <button id="abort">Abort</button>
+      <button id="remove">Delete</button>
     </div>
   </div>
   <hr>
