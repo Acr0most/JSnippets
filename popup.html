@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
+  <meta charset="utf-8" />
+  <title>JSnippets</title>
   <style>
     body {
-      padding: 10px 20x;
       width: 800px;
+      margin: 0;
     }
 
     .wrapper {
+      padding: 10px;
       width: 100%;
       display: flex;
       flex-direction: row;
@@ -31,8 +33,16 @@
       background-color: #e7e7ff;
     }
 
-    .name, .cmd , .snippet {
-      padding: 5px;
+    *[contenteditable="true"] {
+      padding: 5px 0;
+      max-width: 100%;
+      overflow-x: auto;
+    }
+
+    code {
+      white-space: pre;
+      font-family: monospace;
+      display: block;
     }
 
     .snippet:hover {
@@ -41,33 +51,100 @@
 
     .options {
       padding: 0 10px;
+      display: grid;
+      grid-auto-flow: row;
+      grid-row-gap: 10px;
     }
 
     #add {
 	width: calc(100% - 20px);
+    }
+
+    .commands {
+      display: grid;
+      grid-auto-flow: column;
+      grid-template-columns: repeat(3, min-content);
+      grid-column-gap: 5px;
+    }
+
+    label {
+      color: #666;
+      font-weight: bold;
+    }
+
+    .field {
+      max-width: 100%;
+      overflow-x: auto;
+    }
+
+    .field [contenteditable="true"] {
+      border-bottom: 1px dashed transparent;
+
+    }
+
+    .field:hover [contenteditable="true"] {
+      border-bottom: 1px dashed #666;
+    }
+
+    #snippets {
+      display: grid;
+      grid-auto-flow: row;
+      grid-row-gap: 5px;
+      grid-auto-rows: min-content;
+    }
+
+    #outlet {
+      display: grid;
+      grid-auto-flow: row;
+      grid-row-gap: 5px;
+    }
+
+    #outlet > div {
+      padding: 5px;
     }
   </style>
 </head>
 
 <body>
   <div class="wrapper">
-    <div id="snippets" class="snippets">
-	<div id="outlet"></div>
-	<input type="text" id="add" placeholder="add new.." />
-    </div>
-    <div class="options">
-      <div id="options-name" class="name" contenteditable="true"></div>
-      <pre id="options-cmd" class="cmd" contenteditable="true"></pre>
-      <input type="checkbox" id="options-autoexecute" />
-      <div id="options-regex" contenteditable="true"></div>
-      <button id="save">Save</button>
-      <button id="abort">Abort</button>
-      <button id="remove">Delete</button>
-    </div>
-  </div>
-  <hr>
-  <button id="execute">Execute</button>
-</body>
-<script src="popup.js"></script>
 
+    <div id="snippets" class="snippets">
+      <div id="outlet"></div>
+      <input type="text" id="add" placeholder="add new.." />
+    </div>
+
+    <div class="options">
+      <div class="field">
+        <label for="options-name">Name</label>
+        <div id="options-name" class="name" contenteditable="true"></div>
+      </div>
+      <div class="field">
+        <label for="options-cmd">Script</label>
+        <code id="options-cmd" class="cmd" contenteditable="true"></code>
+      </div>
+      <div class="field">
+        <label for="options-regex">URL-Regex, one regex per line.</label>
+        <div id="options-regex" contenteditable="true"></div>
+      </div>
+      <div class="field">
+        <label for="options-autoexecute"><input type="checkbox" id="options-autoexecute" /> Auto execute</label>
+      </div>
+
+      <div class="commands">
+        <button id="save">Save</button>
+        <button id="abort">Abort</button>
+        <button id="remove">Delete</button>
+      </div>
+    </div>
+
+  </div>
+
+  <hr />
+
+  <div class="wrapper">
+    <button id="execute">Execute</button>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
 </html>
