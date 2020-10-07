@@ -4,14 +4,32 @@
     <meta charset="utf-8" />
     <title>JSnippets</title>
     <style>
+      button {
+        background-color: #21917b;
+        border: none;
+        color: white;
+        padding: 5px 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 5px;
+        font-size: 14px;
+      }
+
       body {
         width: 800px;
         margin: 0;
+        font-size: 14px;
+      }
+
+      .execute {
+        border-top: 1px solid lightgray;
       }
 
       .wrapper {
-        padding: 10px;
-        width: 100%;
+        margin: 0 10px;
+        padding: 10px 0;
+        width: calc(100% - 20px);
         display: flex;
         flex-direction: row;
       }
@@ -22,7 +40,7 @@
       }
 
       .options {
-        width: 60%;
+        width: calc(100% - 150px);
       }
 
       .snippet {
@@ -61,15 +79,18 @@
       }
 
       .commands {
+        margin: 0 auto;
+        margin-top: 10px;
         display: grid;
         grid-auto-flow: column;
         grid-template-columns: repeat(3, min-content);
-        grid-column-gap: 5px;
+        grid-column-gap: 50px;
       }
 
       label {
         color: #666;
         font-weight: bold;
+        font-size: 16px;
       }
 
       .field {
@@ -78,14 +99,15 @@
       }
 
       .field [contenteditable="true"] {
-        border-bottom: 1px dashed transparent;
-      }
-
-      .field:hover [contenteditable="true"] {
         border-bottom: 1px dashed #666;
       }
 
+      .field:hover [contenteditable="true"] {
+        border-bottom: 1px dashed #21917b;
+      }
+
       #snippets {
+        width: 150px;
         display: grid;
         grid-auto-flow: row;
         grid-row-gap: 5px;
@@ -100,6 +122,13 @@
 
       #outlet > div {
         padding: 5px;
+      }
+
+      #output {
+        margin: 0 50px;
+        width: calc(100% - 200px);
+        border-radius: 5px;
+        padding: 5px 50px;
       }
     </style>
   </head>
@@ -139,10 +168,9 @@
       </div>
     </div>
 
-    <hr />
-
-    <div class="wrapper">
+    <div class="wrapper execute">
       <button id="execute">Execute</button>
+      <div id="output"></div>
     </div>
 
     <script src="popup.js"></script>
