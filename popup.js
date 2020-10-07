@@ -56,7 +56,7 @@ function showOptions(event) {
     let ids = Object.keys(elements);
 
     if (ids.length == 0 || ids[0] == null) {
-      window.alert("command with id" + id + "not found" + elements + elements + id);
+      showInfo("command with id" + id + "not found" + elements + id, "red", 1000);
       return
     }
 
