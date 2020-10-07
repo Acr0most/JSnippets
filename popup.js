@@ -65,8 +65,19 @@ function showOptions(event) {
   })
 }
 
+function showInfo(message, color, timeout) {
+  setTimeout(() => {
+    document.querySelector('#output').style.backgroundColor = "white";
+    document.querySelector('#output').innerText = "";
+  }, timeout);
+
+  document.querySelector('#output').style.backgroundColor = color;
+  document.querySelector('#output').innerText = message;
+}
+
 function executeCommand() {
   if (id == -1) {
+    showInfo("invalid id", "red", 1000);
     return null;
   }
 
@@ -74,7 +85,7 @@ function executeCommand() {
     let ids = Object.keys(elements);
 
     if (ids.length == 0 || ids[0] == null) {
-      window.alert("command with id" + id + "not found" + elements + elements + id);
+      showInfo("command with id" + id + "not found" + elements + id, "red", 1000);
       return
     }
 
@@ -86,6 +97,8 @@ function executeCommand() {
         code: elements[ids[0]].cmd
       });
     });
+
+    showInfo("executed", "#00b940", 1000);
   })
 }
 
