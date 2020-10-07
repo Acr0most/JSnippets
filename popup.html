@@ -1,150 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <title>JSnippets</title>
-  <style>
-    body {
-      width: 800px;
-      margin: 0;
-    }
+  <head>
+    <meta charset="utf-8" />
+    <title>JSnippets</title>
+    <style>
+      body {
+        width: 800px;
+        margin: 0;
+      }
 
-    .wrapper {
-      padding: 10px;
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-    }
+      .wrapper {
+        padding: 10px;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+      }
 
-    .snippets {
-      width: calc(40% - 1px);
-      border-right: 1px solid lightgray;
-    }
+      .snippets {
+        width: calc(40% - 1px);
+        border-right: 1px solid lightgray;
+      }
 
-    .options {
-      width: 60%;
-    }
+      .options {
+        width: 60%;
+      }
 
-    .snippet {
-      cursor: pointer;
-    }
+      .snippet {
+        cursor: pointer;
+      }
 
-    .snippet.selected {
-      background-color: #e7e7ff;
-    }
+      .snippet.selected {
+        background-color: #e7e7ff;
+      }
 
-    *[contenteditable="true"] {
-      padding: 5px 0;
-      max-width: 100%;
-      overflow-x: auto;
-    }
+      *[contenteditable="true"] {
+        padding: 5px 0;
+        max-width: 100%;
+        overflow-x: auto;
+      }
 
-    code {
-      white-space: pre;
-      font-family: monospace;
-      display: block;
-    }
+      code {
+        white-space: pre;
+        font-family: monospace;
+        display: block;
+      }
 
-    .snippet:hover {
-      background-color: #D3D3D3;
-    }
+      .snippet:hover {
+        background-color: #d3d3d3;
+      }
 
-    .options {
-      padding: 0 10px;
-      display: grid;
-      grid-auto-flow: row;
-      grid-row-gap: 10px;
-    }
+      .options {
+        padding: 0 10px;
+        display: grid;
+        grid-auto-flow: row;
+        grid-row-gap: 10px;
+      }
 
-    #add {
-	width: calc(100% - 20px);
-    }
+      #add {
+        width: calc(100% - 20px);
+      }
 
-    .commands {
-      display: grid;
-      grid-auto-flow: column;
-      grid-template-columns: repeat(3, min-content);
-      grid-column-gap: 5px;
-    }
+      .commands {
+        display: grid;
+        grid-auto-flow: column;
+        grid-template-columns: repeat(3, min-content);
+        grid-column-gap: 5px;
+      }
 
-    label {
-      color: #666;
-      font-weight: bold;
-    }
+      label {
+        color: #666;
+        font-weight: bold;
+      }
 
-    .field {
-      max-width: 100%;
-      overflow-x: auto;
-    }
+      .field {
+        max-width: 100%;
+        overflow-x: auto;
+      }
 
-    .field [contenteditable="true"] {
-      border-bottom: 1px dashed transparent;
+      .field [contenteditable="true"] {
+        border-bottom: 1px dashed transparent;
+      }
 
-    }
+      .field:hover [contenteditable="true"] {
+        border-bottom: 1px dashed #666;
+      }
 
-    .field:hover [contenteditable="true"] {
-      border-bottom: 1px dashed #666;
-    }
+      #snippets {
+        display: grid;
+        grid-auto-flow: row;
+        grid-row-gap: 5px;
+        grid-auto-rows: min-content;
+      }
 
-    #snippets {
-      display: grid;
-      grid-auto-flow: row;
-      grid-row-gap: 5px;
-      grid-auto-rows: min-content;
-    }
+      #outlet {
+        display: grid;
+        grid-auto-flow: row;
+        grid-row-gap: 5px;
+      }
 
-    #outlet {
-      display: grid;
-      grid-auto-flow: row;
-      grid-row-gap: 5px;
-    }
+      #outlet > div {
+        padding: 5px;
+      }
+    </style>
+  </head>
 
-    #outlet > div {
-      padding: 5px;
-    }
-  </style>
-</head>
+  <body>
+    <div class="wrapper">
+      <div id="snippets" class="snippets">
+        <div id="outlet"></div>
+        <input type="text" id="add" placeholder="add new.." />
+      </div>
 
-<body>
-  <div class="wrapper">
+      <div class="options">
+        <div class="field">
+          <label for="options-name">Name</label>
+          <div id="options-name" class="name" contenteditable="true"></div>
+        </div>
+        <div class="field">
+          <label for="options-cmd">Script</label>
+          <code id="options-cmd" class="cmd" contenteditable="true"></code>
+        </div>
+        <div class="field">
+          <label for="options-regex">URL-Regex, one regex per line.</label>
+          <div id="options-regex" contenteditable="true"></div>
+        </div>
+        <div class="field">
+          <label for="options-autoexecute"
+            ><input type="checkbox" id="options-autoexecute" /> Auto
+            execute</label
+          >
+        </div>
 
-    <div id="snippets" class="snippets">
-      <div id="outlet"></div>
-      <input type="text" id="add" placeholder="add new.." />
+        <div class="commands">
+          <button id="save">Save</button>
+          <button id="abort">Abort</button>
+          <button id="remove">Delete</button>
+        </div>
+      </div>
     </div>
 
-    <div class="options">
-      <div class="field">
-        <label for="options-name">Name</label>
-        <div id="options-name" class="name" contenteditable="true"></div>
-      </div>
-      <div class="field">
-        <label for="options-cmd">Script</label>
-        <code id="options-cmd" class="cmd" contenteditable="true"></code>
-      </div>
-      <div class="field">
-        <label for="options-regex">URL-Regex, one regex per line.</label>
-        <div id="options-regex" contenteditable="true"></div>
-      </div>
-      <div class="field">
-        <label for="options-autoexecute"><input type="checkbox" id="options-autoexecute" /> Auto execute</label>
-      </div>
+    <hr />
 
-      <div class="commands">
-        <button id="save">Save</button>
-        <button id="abort">Abort</button>
-        <button id="remove">Delete</button>
-      </div>
+    <div class="wrapper">
+      <button id="execute">Execute</button>
     </div>
 
-  </div>
-
-  <hr />
-
-  <div class="wrapper">
-    <button id="execute">Execute</button>
-  </div>
-
-  <script src="popup.js"></script>
-</body>
+    <script src="popup.js"></script>
+  </body>
 </html>
