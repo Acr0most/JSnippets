@@ -1,150 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <title>JSnippets</title>
-  <style>
-    body {
-      width: 800px;
-      margin: 0;
-    }
+  <head>
+    <meta charset="utf-8" />
+    <title>JSnippets</title>
+    <style>
+      button {
+        background-color: #21917b;
+        border: none;
+        color: white;
+        padding: 5px 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 5px;
+        font-size: 14px;
+      }
 
-    .wrapper {
-      padding: 10px;
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-    }
+      body {
+        width: 800px;
+        margin: 0;
+        font-size: 14px;
+      }
 
-    .snippets {
-      width: calc(40% - 1px);
-      border-right: 1px solid lightgray;
-    }
+      .execute {
+        border-top: 1px solid lightgray;
+      }
 
-    .options {
-      width: 60%;
-    }
+      .wrapper {
+        margin: 0 10px;
+        padding: 10px 0;
+        width: calc(100% - 20px);
+        display: flex;
+        flex-direction: row;
+      }
 
-    .snippet {
-      cursor: pointer;
-    }
+      .snippets {
+        width: calc(40% - 1px);
+        border-right: 1px solid lightgray;
+      }
 
-    .snippet.selected {
-      background-color: #e7e7ff;
-    }
+      .options {
+        width: calc(100% - 150px);
+      }
 
-    *[contenteditable="true"] {
-      padding: 5px 0;
-      max-width: 100%;
-      overflow-x: auto;
-    }
+      .snippet {
+        cursor: pointer;
+      }
 
-    code {
-      white-space: pre;
-      font-family: monospace;
-      display: block;
-    }
+      .snippet.selected {
+        background-color: #e7e7ff;
+      }
 
-    .snippet:hover {
-      background-color: #D3D3D3;
-    }
+      *[contenteditable="true"] {
+        padding: 5px 0;
+        max-width: 100%;
+        overflow-x: auto;
+      }
 
-    .options {
-      padding: 0 10px;
-      display: grid;
-      grid-auto-flow: row;
-      grid-row-gap: 10px;
-    }
+      code {
+        white-space: pre;
+        font-family: monospace;
+        display: block;
+      }
 
-    #add {
-	width: calc(100% - 20px);
-    }
+      .snippet:hover {
+        background-color: #d3d3d3;
+      }
 
-    .commands {
-      display: grid;
-      grid-auto-flow: column;
-      grid-template-columns: repeat(3, min-content);
-      grid-column-gap: 5px;
-    }
+      .options {
+        padding: 0 10px;
+        display: grid;
+        grid-auto-flow: row;
+        grid-row-gap: 10px;
+      }
 
-    label {
-      color: #666;
-      font-weight: bold;
-    }
+      #add {
+        width: calc(100% - 20px);
+      }
 
-    .field {
-      max-width: 100%;
-      overflow-x: auto;
-    }
+      .commands {
+        margin: 0 auto;
+        margin-top: 10px;
+        display: grid;
+        grid-auto-flow: column;
+        grid-template-columns: repeat(3, min-content);
+        grid-column-gap: 50px;
+      }
 
-    .field [contenteditable="true"] {
-      border-bottom: 1px dashed transparent;
+      label {
+        color: #666;
+        font-weight: bold;
+        font-size: 16px;
+      }
 
-    }
+      .field {
+        max-width: 100%;
+        overflow-x: auto;
+      }
 
-    .field:hover [contenteditable="true"] {
-      border-bottom: 1px dashed #666;
-    }
+      .field [contenteditable="true"] {
+        border-bottom: 1px dashed #666;
+      }
 
-    #snippets {
-      display: grid;
-      grid-auto-flow: row;
-      grid-row-gap: 5px;
-      grid-auto-rows: min-content;
-    }
+      .field:hover [contenteditable="true"] {
+        border-bottom: 1px dashed #21917b;
+      }
 
-    #outlet {
-      display: grid;
-      grid-auto-flow: row;
-      grid-row-gap: 5px;
-    }
+      #snippets {
+        width: 150px;
+        display: grid;
+        grid-auto-flow: row;
+        grid-row-gap: 5px;
+        grid-auto-rows: min-content;
+      }
 
-    #outlet > div {
-      padding: 5px;
-    }
-  </style>
-</head>
+      #outlet {
+        display: grid;
+        grid-auto-flow: row;
+        grid-row-gap: 5px;
+      }
 
-<body>
-  <div class="wrapper">
+      #outlet > div {
+        padding: 5px;
+      }
 
-    <div id="snippets" class="snippets">
-      <div id="outlet"></div>
-      <input type="text" id="add" placeholder="add new.." />
+      #output {
+        margin: 0 50px;
+        width: calc(100% - 200px);
+        border-radius: 5px;
+        padding: 5px 50px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <div id="snippets" class="snippets">
+        <div id="outlet"></div>
+        <input type="text" id="add" placeholder="add new.." />
+      </div>
+
+      <div class="options">
+        <div class="field">
+          <label for="options-name">Name</label>
+          <div id="options-name" class="name" contenteditable="true"></div>
+        </div>
+        <div class="field">
+          <label for="options-cmd">Script</label>
+          <code id="options-cmd" class="cmd" contenteditable="true"></code>
+        </div>
+        <div class="field">
+          <label for="options-regex">URL-Regex, one regex per line.</label>
+          <div id="options-regex" contenteditable="true"></div>
+        </div>
+        <div class="field">
+          <label for="options-autoexecute"
+            ><input type="checkbox" id="options-autoexecute" /> Auto
+            execute</label
+          >
+        </div>
+
+        <div class="commands">
+          <button id="save">Save</button>
+          <button id="abort">Abort</button>
+          <button id="remove">Delete</button>
+        </div>
+      </div>
     </div>
 
-    <div class="options">
-      <div class="field">
-        <label for="options-name">Name</label>
-        <div id="options-name" class="name" contenteditable="true"></div>
-      </div>
-      <div class="field">
-        <label for="options-cmd">Script</label>
-        <code id="options-cmd" class="cmd" contenteditable="true"></code>
-      </div>
-      <div class="field">
-        <label for="options-regex">URL-Regex, one regex per line.</label>
-        <div id="options-regex" contenteditable="true"></div>
-      </div>
-      <div class="field">
-        <label for="options-autoexecute"><input type="checkbox" id="options-autoexecute" /> Auto execute</label>
-      </div>
-
-      <div class="commands">
-        <button id="save">Save</button>
-        <button id="abort">Abort</button>
-        <button id="remove">Delete</button>
-      </div>
+    <div class="wrapper execute">
+      <button id="execute">Execute</button>
+      <div id="output"></div>
     </div>
 
-  </div>
-
-  <hr />
-
-  <div class="wrapper">
-    <button id="execute">Execute</button>
-  </div>
-
-  <script src="popup.js"></script>
-</body>
+    <script src="popup.js"></script>
+  </body>
 </html>
