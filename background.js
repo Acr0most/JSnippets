@@ -21,24 +21,6 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     return;
   }
 
-<<<<<<< HEAD
-  chrome.storage.local.get(null, (elements) => {
-    Object.values(elements).forEach((cmd) => {
-      if (!cmd.autoExecute || !cmd.regex) {
-        return;
-      }
-
-      const regexes = cmd.regex.split(/\n/g);
-
-      for (let i = 0; i < regexes.length; i++) {
-        if (new RegExp(regexes[i], "g").exec(changeInfo.url)) {
-          chrome.tabs.executeScript(tab.id, { code: cmd.cmd });
-        }
-      }
-    });
-  });
-});
-=======
 	chrome.storage.local.get(null, (elements) => {
 		Object.values(elements).forEach(cmd => {
 			if (!cmd.autoExecute || !cmd.regex) {
@@ -55,4 +37,3 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 	});
   }
 );
->>>>>>> styles fixes, improve some methods
