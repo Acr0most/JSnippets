@@ -4,7 +4,13 @@ function fillView() {
   document.getElementById("outlet").innerHTML = "";
 
   cmd = chrome.storage.local.get(null, (elements) => {
-    Object.keys(elements).forEach(key => document.getElementById("outlet").innerHTML += `<div id="${key}" class="snippet">${elements[key].name}</div>`);
+    const dynamicElements = Object.keys(elements).reduce(
+      (str, key) =>
+        str + `<div id="${key}" class="snippet">${elements[key].name}</div>`,
+      ""
+    );
+
+    document.getElementById("outlet").innerHTML = dynamicElements;
   });
 
   cmd = chrome.storage.local.get(null, (elements) => {
